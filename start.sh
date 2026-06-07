@@ -13,4 +13,5 @@ python3 /workspace/download_models.py &
 
 # 3. ComfyUI als HAUPTPROZESS im Vordergrund starten (Port 8188)
 # Da es im Vordergrund läuft, siehst du sofort alle Fehlermeldungen live im RunPod-Log!
-python3 main.py --listen 0.0.0.0 --port 8188 --highvram --fp8_e4m3fn-text-enc
+# ComfyUI mit CORS-Erlaubnis starten, um die RunPod-Proxy-Blockade (403) zu killen!
+python3 main.py --listen 0.0.0.0 --port 8188 --highvram --fp8_e4m3fn-text-enc --enable-cors-header
