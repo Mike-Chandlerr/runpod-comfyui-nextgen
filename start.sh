@@ -5,7 +5,7 @@ cd /app
 export HF_HOME="/workspace/hf_cache"
 export HF_HUB_CACHE="/workspace/hf_cache"
 
-# 1. Modell-Download starten
+# 1. Modell-Download starten (Nutzt jetzt die fehlerfreie download_models.py)
 python3 /app/download_models.py
 
 # 2. Jupyter Lab im Hintergrund starten
