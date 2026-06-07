@@ -1,0 +1,12 @@
+runpod>=1.6.2
+torch>=2.4.0
+torchvision
+torchaudio
+diffusers>=0.31.0
+transformers>=4.45.0
+accelerate>=0.33.0
+huggingface_hub[hf_transfer]>=0.25.0
+sentencepiece
+protobuf
+safetensors
+einops
