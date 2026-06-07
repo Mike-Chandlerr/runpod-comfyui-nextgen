@@ -1,22 +1,13 @@
 #!/bin/bash
-# Production Entrypoint Script for RunPod Serverless
 
-echo "[START] Starting RunPod Worker Initialization..."
+# In das Arbeitsverzeichnis wechseln
+cd /workspace
 
-# Check for HF Token
-if [ -z "$HF_TOKEN" ]; then
-  echo "[WARNING] HF_TOKEN is not set. Gated models might fail to download!"
-else
-  echo "[INFO] HF_TOKEN is set. Configuring Hugging Face Authentication..."
-  huggingface-cli login --token $HF_TOKEN --add-to-git-credential
-fi
+# 1. Start des automatischen Modell-Downloads im Hintergrund
+python3 /workspace/download_models.py
 
-# Set custom cache directory to persist models if storage volume is mounted
-export HF_HOME=${HF_HOME:-/workspace/hf_cache}
-mkdir -p $HF_HOME
-
-echo "[INFO] Target HF Cache Directory: $HF_HOME"
-
-# Execute primary handler script
-echo "[START] Launching Serverless Worker..."
-python -u /app/handler.py
+# 2. ComfyUI starten mit optimalen Argumenten für RTX 4090 / 5090
+# --listen 0.0.0.0 öffnet die Ports für das RunPod Web-Interface
+# --highvram nutzt die volle Power der 24GB+ Karten aus
+# --fp8_e4m3fn-text-enc spart massiv VRAM bei extrem großen Text-Encodern (wie bei Flux)
+python3 main.py --listen 0.0.0.0 --port 8188 --highvram --fp8_e4m3fn-text-enc
